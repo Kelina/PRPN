@@ -1,6 +1,6 @@
 import os
 import re
-import cPickle
+import pickle as cPickle
 import copy
 
 import numpy
@@ -52,7 +52,7 @@ class Dictionary(object):
         return len(self.idx2word)
 
     def __getitem__(self, item):
-        if self.word2idx.has_key(item):
+        if item in self.word2idx:
             return self.word2idx[item]
         else:
             return self.word2idx['<unk>']
@@ -61,12 +61,12 @@ class Dictionary(object):
         self.word2idx = {'<unk>': 0}
         self.idx2word = ['<unk>']
 
-        for k, v in self.word2frq.iteritems():
+        for k, v in self.word2frq.items():
             if v >= thd and (not k in self.idx2word):
                 self.idx2word.append(k)
                 self.word2idx[k] = len(self.idx2word) - 1
 
-        print 'Number of words:', len(self.idx2word)
+        print('Number of words:', len(self.idx2word))
         return len(self.idx2word)
 
 

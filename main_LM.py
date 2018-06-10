@@ -90,9 +90,11 @@ def batchify(data, bsz, random_start_idx=False):
         start_idx = random.randint(0, data.size(0) % bsz - 1)
     else:
         start_idx = 0
+    print(data)
     data = data.narrow(0, start_idx, nbatch * bsz)
     # Evenly divide the data across the bsz batches.
     data = data.view(bsz, -1).t().contiguous()
+    print(data)
     if args.cuda:
         data = data.cuda()
     return data
@@ -169,6 +171,9 @@ def train():
     train_data = batchify(corpus.train, args.batch_size, random_start_idx=True)
     for batch, i in enumerate(range(0, train_data.size(0) - 1, args.bptt)):
         data, targets = get_batch(train_data, i)
+        print(data)
+        print(targets)
+        exit()
         # Starting each batch, we detach the hidden state from how it was previously produced.
         # If we didn't, the model would try backpropagating all the way to start of the dataset.
         hidden = repackage_hidden(hidden)

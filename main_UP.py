@@ -13,6 +13,7 @@ import data_ptb as data
 from model_PRPN import PRPN
 from test_phrase_grammar import test
 
+
 parser = argparse.ArgumentParser(description='PyTorch PennTreeBank RNN/LSTM Language Model')
 parser.add_argument('--data', type=str, default='./data/ptb',
                     help='location of the data corpus')
@@ -84,7 +85,6 @@ if torch.cuda.is_available():
 
 corpus = data.Corpus(args.data)
 
-
 def batchify(data, bsz):
     # Work out how cleanly we can divide the dataset into bsz parts.
     nbatch = len(data) // bsz
@@ -120,6 +120,8 @@ eval_batch_size = 64
 train_data = batchify(corpus.train, args.batch_size)
 val_data = batchify(corpus.valid, eval_batch_size)
 test_data = batchify(corpus.test, eval_batch_size)
+
+print('INFO: Data loaded.')
 
 ###############################################################################
 # Build the model
@@ -216,7 +218,6 @@ def train():
             start_time = time.time()
 
     return train_loss[0] / batch
-
 
 # Loop over epochs.
 lr = args.lr
